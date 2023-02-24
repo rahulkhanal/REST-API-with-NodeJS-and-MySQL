@@ -53,7 +53,7 @@ app.get("/api/view", (req, res) => {
 
 //GET method to get singular data
 app.get("/api/view/:id", (req, res) => {
-    //Getting dataa from the table in database
+    //Getting data from the table in database
     const value = req.params.id;
     console.log(value)
     let sql = "SELECT * FROM mytable WHERE Address=?";
@@ -65,6 +65,16 @@ app.get("/api/view/:id", (req, res) => {
         } else {
             res.send(JSON.stringify({ status: 200, error: null, response: result }))
         }
+    })
+})
+
+//GET method to get data
+app.put("/api/update", (req, res) => {
+    //Getting dataa from the table in database
+    let sql = "UPDATE mytable SET Address=? WHERE Name=?"
+    let query = conn.query(sql, [req.body.location, req.body.name], (err, result) => {
+        if (err) throw err;
+        res.send(JSON.stringify({ status: 200, error: null, response: result }))
     })
 })
 
