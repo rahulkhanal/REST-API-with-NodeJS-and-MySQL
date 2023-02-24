@@ -53,9 +53,9 @@ app.get("/api/view", (req, res) => {
 
 //GET method to get singular data
 app.get("/api/view/:id", (req, res) => {
-    //Getting data from the table in database
     const value = req.params.id;
     console.log(value)
+    //Getting data from the table in database
     let sql = "SELECT * FROM mytable WHERE Address=?";
     let query = conn.query(sql, value, (err, result) => {
         if (err) {
@@ -68,9 +68,9 @@ app.get("/api/view/:id", (req, res) => {
     })
 })
 
-//GET method to get data
+//PUT method to update data
 app.put("/api/update", (req, res) => {
-    //Getting dataa from the table in database
+    //Update data in the table in database
     let sql = "UPDATE mytable SET Address=? WHERE Name=?"
     let query = conn.query(sql, [req.body.location, req.body.name], (err, result) => {
         if (err) throw err;
@@ -78,6 +78,15 @@ app.put("/api/update", (req, res) => {
     })
 })
 
+//DELETE method to deletes data
+app.delete("/api/delete/:id_Name", (req, res) => {
+    //Update data in the table in database
+    let sql = "DELETE FROM mytable WHERE Name=?"
+    let query = conn.query(sql, [req.body.name], (err, result) => {
+        if (err) throw err;
+        res.send(JSON.stringify({ status: 200, error: null, response: result }))
+    })
+})
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
